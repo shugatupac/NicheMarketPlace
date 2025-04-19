@@ -432,6 +432,35 @@ export class MemStorage implements IStorage {
       rating: 4,
       comment: "Love the scent and how it moisturizes my skin."
     });
+    
+    // Create sample wishlist for the regular user
+    const regularUser = this.createUser({
+      username: "john",
+      password: "password123",
+      email: "john@example.com",
+      name: "John Doe",
+      role: "buyer"
+    });
+    
+    // Create cart for the user
+    this.createCart({ userId: regularUser.id });
+    
+    // Create wishlist for the user
+    const userWishlist = this.createWishlist({ 
+      userId: regularUser.id,
+      name: "My Favorites"
+    });
+    
+    // Add some products to wishlist
+    this.createWishlistItem({ 
+      wishlistId: userWishlist.id, 
+      productId: rawSheaButter.id 
+    });
+    
+    this.createWishlistItem({ 
+      wishlistId: userWishlist.id, 
+      productId: bodyCream.id 
+    });
   }
 
   // Users
