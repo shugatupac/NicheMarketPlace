@@ -771,6 +771,7 @@ export class MemStorage implements IStorage {
     const wishlist: Wishlist = {
       ...insertWishlist,
       id,
+      name: insertWishlist.name || "My Wishlist",
       createdAt: now,
       updatedAt: now
     };
