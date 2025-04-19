@@ -176,6 +176,7 @@ export const insertCartItemSchema = createInsertSchema(cartItems).omit({
 export const wishlists = pgTable("wishlists", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").notNull().references(() => users.id),
+  name: text("name").notNull().default("My Wishlist"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });

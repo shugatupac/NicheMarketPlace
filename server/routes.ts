@@ -38,6 +38,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Create cart for new user
       await storage.createCart({ userId: user.id });
       
+      // Create wishlist for new user
+      await storage.createWishlist({ 
+        userId: user.id,
+        name: "My Wishlist"
+      });
+      
       res.status(201).json(userWithoutPassword);
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -532,6 +538,109 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(200).json(ordersWithItems);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch orders" });
+    }
+  });
+  
+  // Wishlists
+  app.get("/api/wishlists/:userId", async (req: Request, res: Response) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      
+      // Get or create wishlist
+      let wishlist = await storage.getWishlistByUserId(userId);
+      if (!wishlist) {
+        wishlist = await storage.createWishlist({ 
+          userId,
+          name: "My Wishlist"
+        });
+      }
+      
+      const wishlistProducts = await storage.getWishlistProducts(wishlist.id);
+      
+      res.status(200).json({
+        id: wishlist.id,
+        userId: wishlist.userId,
+        name: wishlist.name,
+        products: wishlistProducts,
+        createdAt: wishlist.createdAt,
+        updatedAt: wishlist.updatedAt
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch wishlist" });
+    }
+  });
+  
+  app.post("/api/wishlists/:userId/items", async (req: Request, res: Response) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const { productId } = req.body;
+      
+      if (!productId) {
+        return res.status(400).json({ message: "Product ID is required" });
+      }
+      
+      // Check if product exists
+      const product = await storage.getProduct(productId);
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+      
+      // Get or create wishlist
+      let wishlist = await storage.getWishlistByUserId(userId);
+      if (!wishlist) {
+        wishlist = await storage.createWishlist({
+          userId,
+          name: "My Wishlist"
+        });
+      }
+      
+      // Check if product is already in wishlist
+      const isInWishlist = await storage.isProductInWishlist(wishlist.id, productId);
+      if (isInWishlist) {
+        return res.status(409).json({ message: "Product already in wishlist" });
+      }
+      
+      // Add product to wishlist
+      const wishlistItem = await storage.createWishlistItem({
+        wishlistId: wishlist.id,
+        productId
+      });
+      
+      res.status(201).json({
+        id: wishlistItem.id,
+        product,
+        addedAt: wishlistItem.addedAt
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to add product to wishlist" });
+    }
+  });
+  
+  app.delete("/api/wishlists/:userId/items/:productId", async (req: Request, res: Response) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const productId = parseInt(req.params.productId);
+      
+      // Get wishlist
+      const wishlist = await storage.getWishlistByUserId(userId);
+      if (!wishlist) {
+        return res.status(404).json({ message: "Wishlist not found" });
+      }
+      
+      // Get wishlist items
+      const wishlistItems = await storage.getWishlistItems(wishlist.id);
+      const itemToRemove = wishlistItems.find(item => item.productId === productId);
+      
+      if (!itemToRemove) {
+        return res.status(404).json({ message: "Product not found in wishlist" });
+      }
+      
+      // Remove product from wishlist
+      await storage.deleteWishlistItem(itemToRemove.id);
+      
+      res.status(200).json({ message: "Product removed from wishlist" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to remove product from wishlist" });
     }
   });
   
