@@ -753,6 +753,77 @@ export class MemStorage implements IStorage {
   async deleteCartItem(id: number): Promise<boolean> {
     return this.cartItemsMap.delete(id);
   }
+  
+  // Wishlists
+  async getWishlist(id: number): Promise<Wishlist | undefined> {
+    return this.wishlistsMap.get(id);
+  }
+  
+  async getWishlistByUserId(userId: number): Promise<Wishlist | undefined> {
+    return Array.from(this.wishlistsMap.values()).find(
+      (wishlist) => wishlist.userId === userId
+    );
+  }
+  
+  async createWishlist(insertWishlist: InsertWishlist): Promise<Wishlist> {
+    const id = this.wishlistId++;
+    const now = new Date();
+    const wishlist: Wishlist = {
+      ...insertWishlist,
+      id,
+      createdAt: now,
+      updatedAt: now
+    };
+    
+    this.wishlistsMap.set(id, wishlist);
+    return wishlist;
+  }
+  
+  // Wishlist Items
+  async getWishlistItem(id: number): Promise<WishlistItem | undefined> {
+    return this.wishlistItemsMap.get(id);
+  }
+  
+  async createWishlistItem(insertWishlistItem: InsertWishlistItem): Promise<WishlistItem> {
+    const id = this.wishlistItemId++;
+    const now = new Date();
+    const wishlistItem: WishlistItem = {
+      ...insertWishlistItem,
+      id,
+      addedAt: now
+    };
+    
+    this.wishlistItemsMap.set(id, wishlistItem);
+    return wishlistItem;
+  }
+  
+  async getWishlistItems(wishlistId: number): Promise<WishlistItem[]> {
+    return Array.from(this.wishlistItemsMap.values())
+      .filter((item) => item.wishlistId === wishlistId);
+  }
+  
+  async getWishlistProducts(wishlistId: number): Promise<Product[]> {
+    const wishlistItems = await this.getWishlistItems(wishlistId);
+    const products: Product[] = [];
+    
+    for (const item of wishlistItems) {
+      const product = this.productsMap.get(item.productId);
+      if (product) {
+        products.push(product);
+      }
+    }
+    
+    return products;
+  }
+  
+  async deleteWishlistItem(id: number): Promise<boolean> {
+    return this.wishlistItemsMap.delete(id);
+  }
+  
+  async isProductInWishlist(wishlistId: number, productId: number): Promise<boolean> {
+    const wishlistItems = await this.getWishlistItems(wishlistId);
+    return wishlistItems.some(item => item.productId === productId);
+  }
 }
 
 export const storage = new MemStorage();
