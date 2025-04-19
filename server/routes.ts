@@ -616,6 +616,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  app.get("/api/wishlists/:userId/check/:productId", async (req: Request, res: Response) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const productId = parseInt(req.params.productId);
+      
+      // Get wishlist
+      const wishlist = await storage.getWishlistByUserId(userId);
+      if (!wishlist) {
+        return res.status(200).json({ inWishlist: false });
+      }
+      
+      // Check if product is in wishlist
+      const isInWishlist = await storage.isProductInWishlist(wishlist.id, productId);
+      
+      res.status(200).json({ inWishlist: isInWishlist });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to check wishlist status" });
+    }
+  });
+  
   app.delete("/api/wishlists/:userId/items/:productId", async (req: Request, res: Response) => {
     try {
       const userId = parseInt(req.params.userId);

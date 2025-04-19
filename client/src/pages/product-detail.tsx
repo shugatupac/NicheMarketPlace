@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useParams, useLocation } from "wouter";
 import { useState } from "react";
 import { Product } from "@/lib/types";
@@ -8,6 +8,8 @@ import StarRating from "@/components/ui/star-rating";
 import { useCart } from "@/contexts/cart-context";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import { useAuth } from "@/contexts/auth-context";
+import { Heart } from "lucide-react";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -16,6 +18,26 @@ const ProductDetailPage = () => {
   const { addToCart } = useCart();
   const { toast } = useToast();
   const [quantity, setQuantity] = useState(1);
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const userId = user?.id || 1; // Use authenticated user ID or fallback to 1 for demo
+  
+  // Check if product is in wishlist
+  const { data: wishlist, isLoading: isWishlistLoading } = useQuery({
+    queryKey: [`/api/wishlists/${userId}`],
+    enabled: !!userId,
+  });
+  
+  const [isInWishlist, setIsInWishlist] = useState(false);
+  
+  // Check if the product is in the wishlist
+  const { isLoading: isCheckingWishlist } = useQuery({
+    queryKey: [`/api/wishlists/${userId}/check/${productId}`],
+    enabled: !!userId && !!productId,
+    onSuccess: (data: any) => {
+      setIsInWishlist(!!data?.inWishlist);
+    },
+  });
 
   const { data: product, isLoading, error } = useQuery<Product>({
     queryKey: [`/api/products/${productId}`],
@@ -59,6 +81,47 @@ const ProductDetailPage = () => {
     handleAddToCart();
     navigate("/checkout");
   };
+  
+  // Add to wishlist mutation
+  const toggleWishlistMutation = useMutation({
+    mutationFn: async () => {
+      if (isInWishlist) {
+        // Find the wishlist item ID first
+        const wishlistProducts = await apiRequest("GET", `/api/wishlists/${userId}`);
+        const wishlistItemId = wishlistProducts?.items?.find(
+          (item: any) => item.productId === productId
+        )?.id;
+        
+        if (wishlistItemId) {
+          return apiRequest("DELETE", `/api/wishlists/${userId}/items/${productId}`);
+        }
+        return null;
+      } else {
+        return apiRequest("POST", `/api/wishlists/${userId}/items`, {
+          productId
+        });
+      }
+    },
+    onSuccess: () => {
+      setIsInWishlist(!isInWishlist);
+      queryClient.invalidateQueries({ queryKey: [`/api/wishlists/${userId}`] });
+      
+      toast({
+        title: isInWishlist ? "Removed from Wishlist" : "Added to Wishlist",
+        description: isInWishlist 
+          ? `${name} has been removed from your wishlist.` 
+          : `${name} has been added to your wishlist.`,
+      });
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to update wishlist. Please try again.",
+        variant: "destructive"
+      });
+      console.error("Failed to update wishlist:", error);
+    }
+  });
 
   if (isLoading) {
     return (
@@ -219,13 +282,25 @@ const ProductDetailPage = () => {
             </Button>
           </div>
           
-          <Button 
-            onClick={handleBuyNow}
-            className="w-full bg-accent hover:bg-accent-dark"
-            disabled={stock <= 0}
-          >
-            Buy Now
-          </Button>
+          <div className="flex gap-4 my-6">
+            <Button 
+              onClick={handleBuyNow}
+              className="flex-1 bg-accent hover:bg-accent-dark"
+              disabled={stock <= 0}
+            >
+              Buy Now
+            </Button>
+            
+            <Button
+              onClick={() => toggleWishlistMutation.mutate()}
+              variant={isInWishlist ? "outline" : "secondary"}
+              className={`flex items-center gap-2 ${isInWishlist ? 'border-red-400 text-red-500' : ''}`}
+              disabled={toggleWishlistMutation.isPending}
+            >
+              <Heart className={`h-5 w-5 ${isInWishlist ? 'fill-red-500' : ''}`} />
+              {isInWishlist ? 'Saved' : 'Save'}
+            </Button>
+          </div>
           
           {/* Sharing */}
           <div className="mt-8">
