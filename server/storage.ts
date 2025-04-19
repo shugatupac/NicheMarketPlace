@@ -10,6 +10,8 @@ import {
   orderItems, type OrderItem, type InsertOrderItem,
   carts, type Cart, type InsertCart,
   cartItems, type CartItem, type InsertCartItem,
+  wishlists, type Wishlist, type InsertWishlist,
+  wishlistItems, type WishlistItem, type InsertWishlistItem,
 } from "@shared/schema";
 
 // modify the interface with any CRUD methods
@@ -83,6 +85,19 @@ export interface IStorage {
   getCartItems(cartId: number): Promise<CartItem[]>;
   updateCartItem(id: number, quantity: number): Promise<CartItem | undefined>;
   deleteCartItem(id: number): Promise<boolean>;
+  
+  // Wishlists
+  getWishlist(id: number): Promise<Wishlist | undefined>;
+  getWishlistByUserId(userId: number): Promise<Wishlist | undefined>;
+  createWishlist(wishlist: InsertWishlist): Promise<Wishlist>;
+  
+  // Wishlist Items
+  getWishlistItem(id: number): Promise<WishlistItem | undefined>;
+  createWishlistItem(wishlistItem: InsertWishlistItem): Promise<WishlistItem>;
+  getWishlistItems(wishlistId: number): Promise<WishlistItem[]>;
+  getWishlistProducts(wishlistId: number): Promise<Product[]>;
+  deleteWishlistItem(id: number): Promise<boolean>;
+  isProductInWishlist(wishlistId: number, productId: number): Promise<boolean>;
 }
 
 export class MemStorage implements IStorage {
@@ -97,6 +112,8 @@ export class MemStorage implements IStorage {
   private orderItemsMap: Map<number, OrderItem>;
   private cartsMap: Map<number, Cart>;
   private cartItemsMap: Map<number, CartItem>;
+  private wishlistsMap: Map<number, Wishlist>;
+  private wishlistItemsMap: Map<number, WishlistItem>;
   
   private userId: number;
   private supplierId: number;
@@ -109,6 +126,8 @@ export class MemStorage implements IStorage {
   private orderItemId: number;
   private cartId: number;
   private cartItemId: number;
+  private wishlistId: number;
+  private wishlistItemId: number;
 
   constructor() {
     this.usersMap = new Map();
@@ -122,6 +141,8 @@ export class MemStorage implements IStorage {
     this.orderItemsMap = new Map();
     this.cartsMap = new Map();
     this.cartItemsMap = new Map();
+    this.wishlistsMap = new Map();
+    this.wishlistItemsMap = new Map();
     
     this.userId = 1;
     this.supplierId = 1;
@@ -134,6 +155,8 @@ export class MemStorage implements IStorage {
     this.orderItemId = 1;
     this.cartId = 1;
     this.cartItemId = 1;
+    this.wishlistId = 1;
+    this.wishlistItemId = 1;
     
     // Initialize with some sample data
     this.seedData();
