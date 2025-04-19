@@ -12,6 +12,7 @@ import LiveMarketPage from "@/pages/live-market";
 import CartPage from "@/pages/cart";
 import CheckoutPage from "@/pages/checkout";
 import SupplierDashboardPage from "@/pages/supplier-dashboard";
+import WishlistPage from "@/pages/wishlist";
 import { useState } from "react";
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
             <Route path="/live-market" component={LiveMarketPage} />
             <Route path="/cart" component={CartPage} />
             <Route path="/checkout" component={CheckoutPage} />
+            <Route path="/wishlist" component={WishlistPage} />
             <Route path="/supplier-dashboard" component={SupplierDashboardPage} />
             <Route component={NotFound} />
           </Switch>

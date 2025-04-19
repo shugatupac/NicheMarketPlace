@@ -42,9 +42,9 @@ export default function WishlistPage() {
   // Remove from wishlist mutation
   const removeFromWishlistMutation = useMutation({
     mutationFn: async (productId: number) => {
-      return await apiRequest(`/api/wishlists/${user?.id}/items/${productId}`, {
-        method: 'DELETE',
-      });
+      return await apiRequest(`/api/wishlists/${user?.id}/items/${productId}`, 
+        'DELETE'
+      );
     },
     onSuccess: () => {
       toast({
