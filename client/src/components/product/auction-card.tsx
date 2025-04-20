@@ -9,7 +9,7 @@ interface AuctionCardProps {
 
 const AuctionCard = ({ auction }: AuctionCardProps) => {
   const { id, product, currentPrice, endTime, bidCount, supplier } = auction;
-  const productImage = product.images[0];
+  const productImage = product?.images?.[0] ?? '/placeholder-image.jpg';
   const supplierName = supplier?.businessName;
   
   return (
