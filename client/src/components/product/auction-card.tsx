@@ -1,7 +1,7 @@
 
 import { Link } from "wouter";
 import { Auction } from "@/lib/types";
-import { CountdownTimer } from "../ui/countdown-timer";
+import { CountdownTimer } from "../ui/countdown-timer.tsx";
 
 interface AuctionCardProps {
   auction: Auction;

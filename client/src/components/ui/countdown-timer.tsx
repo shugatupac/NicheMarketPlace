@@ -53,3 +53,39 @@ const CountdownTimer: React.FC<CountdownTimerProps> = ({ endTime, onEnd }) => {
 };
 
 export default CountdownTimer;
+import React, { useState, useEffect } from 'react';
+
+interface CountdownTimerProps {
+  endTime: Date;
+}
+
+export function CountdownTimer({ endTime }: CountdownTimerProps) {
+  const [timeLeft, setTimeLeft] = useState('');
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const difference = new Date(endTime).getTime() - new Date().getTime();
+      
+      if (difference <= 0) {
+        return 'Ended';
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((difference / 1000 / 60) % 60);
+      const seconds = Math.floor((difference / 1000) % 60);
+
+      return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    };
+
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    setTimeLeft(calculateTimeLeft());
+
+    return () => clearInterval(timer);
+  }, [endTime]);
+
+  return <span className="font-poppins font-medium">{timeLeft}</span>;
+}
