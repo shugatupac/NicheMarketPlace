@@ -8,8 +8,13 @@ interface AuctionCardProps {
 }
 
 const AuctionCard = ({ auction }: AuctionCardProps) => {
+  if (!auction || !auction.product) {
+    return null;
+  }
+
   const { id, product, currentPrice, endTime, bidCount, supplier } = auction;
-  const productImage = product?.images?.[0] ?? '/placeholder-image.jpg';
+  const productImage = product.images?.[0] ?? '/placeholder-image.jpg';
+  const productName = product.name ?? 'Untitled Product';
   const supplierName = supplier?.businessName;
   
   return (
@@ -17,7 +22,7 @@ const AuctionCard = ({ auction }: AuctionCardProps) => {
       <div className="relative">
         <img 
           src={productImage} 
-          alt={product.name} 
+          alt={productName} 
           className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" 
         />
         <div className="auction-timer absolute bottom-0 left-0 right-0 text-white py-2 px-4 flex justify-between items-center bg-gradient-to-r from-accent to-accent-dark">
