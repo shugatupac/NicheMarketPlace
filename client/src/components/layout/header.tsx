@@ -4,6 +4,7 @@ import { useCart } from "@/contexts/cart-context";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useState } from "react";
+import { ThemeToggle } from "../ui/theme-toggle";
 
 interface HeaderProps {
   toggleMobileMenu: () => void;
