@@ -48,19 +48,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     }
 
-    // For the demo, we'll auto-login as a customer
+    // For the demo, we'll create supplier account
     if (!storedUser) {
-      const demoUser = {
-        id: 1,
-        username: "customer1",
-        email: "customer1@example.com",
-        name: "Kofi Anan",
-        role: "buyer",
+      const supplierUser = {
+        id: 2,
+        username: "isaac@addy",
+        password: "Zavi1255@",
+        email: "isaac@addy",
+        name: "Isaac Addy",
+        role: "supplier",
         createdAt: new Date().toISOString()
       };
-      setUser(demoUser);
-      setIsAuthenticated(true);
-      localStorage.setItem("user", JSON.stringify(demoUser));
+      
+      // Register the supplier
+      storage.createUser(supplierUser);
     }
   }, []);
 
