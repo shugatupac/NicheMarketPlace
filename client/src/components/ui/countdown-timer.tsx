@@ -47,4 +47,4 @@ const CountdownTimer = ({ endTime, onEnd }: CountdownTimerProps) => {
   );
 };
 
-export default CountdownTimer;
+export { CountdownTimer };
