@@ -6,9 +6,9 @@ const PaymentMethods = () => {
       alt: "Visa"
     },
     {
-      name: "PayPal",
-      image: "https://cdn.pixabay.com/photo/2018/05/08/21/29/paypal-3384015_960_720.png",
-      alt: "PayPal"
+      name: "Mastercard",
+      image: "https://www.logo.wine/a/logo/Mastercard/Mastercard-Logo.wine.svg",
+      alt: "Mastercard"
     },
     {
       name: "MTN Mobile Money",
@@ -21,9 +21,9 @@ const PaymentMethods = () => {
       alt: "Vodafone Cash"
     },
     {
-      name: "Mastercard",
-      image: "https://www.logo.wine/a/logo/Mastercard/Mastercard-Logo.wine.svg",
-      alt: "Mastercard"
+      name: "Telecel Cash",
+      image: "https://www.logo.wine/a/logo/Telecel_Group/Telecel_Group-Logo.wine.svg",
+      alt: "Telecel Cash"
     }
   ];
 

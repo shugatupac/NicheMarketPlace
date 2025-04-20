@@ -241,6 +241,17 @@ const CheckoutPage = () => {
                   </Label>
                 </div>
                 <div className="flex items-center space-x-2 mb-2">
+                  <RadioGroupItem value="telecelcash" id="telecelcash" />
+                  <Label htmlFor="telecelcash" className="flex items-center cursor-pointer">
+                    <img
+                      src="https://www.logo.wine/a/logo/Telecel_Group/Telecel_Group-Logo.wine.svg"
+                      alt="Telecel Cash"
+                      className="h-8 mr-2"
+                    />
+                    Telecel Cash
+                  </Label>
+                </div>
+                <div className="flex items-center space-x-2 mb-2">
                   <RadioGroupItem value="card" id="card" />
                   <Label htmlFor="card" className="flex items-center cursor-pointer">
                     <div className="flex">
@@ -279,7 +290,7 @@ const CheckoutPage = () => {
                 </div>
               )}
 
-              {(formData.paymentMethod === "mtnmomo" || formData.paymentMethod === "vodafonecash") && (
+              {(formData.paymentMethod === "mtnmomo" || formData.paymentMethod === "vodafonecash" || formData.paymentMethod === "telecelcash") && (
                 <div className="border border-neutral-200 p-4 rounded-lg mb-6">
                   <p className="text-neutral-600 mb-2">
                     You will receive a prompt on your phone to confirm payment once you place the order.
