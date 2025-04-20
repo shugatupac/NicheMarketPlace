@@ -18,8 +18,8 @@ interface LoginModalProps {
 
 export function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const { login } = useAuth();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("isaac@addy");
+  const [password, setPassword] = useState("Zavi1255@");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
