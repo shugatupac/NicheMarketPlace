@@ -21,7 +21,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50" onClick={onClose}>
       <div 
-        className="bg-white h-full w-3/4 max-w-xs p-4 transform transition-transform duration-300 ease-in-out"
+        className="bg-white dark:bg-slate-900 h-full w-3/4 max-w-xs p-4 transform transition-transform duration-300 ease-in-out"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center mb-6">
@@ -29,9 +29,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
             <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center mr-2">
               <span className="text-white font-bold text-sm">SG</span>
             </div>
-            <span className="font-montserrat font-bold text-lg">Shea Ghana</span>
+            <span className="font-montserrat font-bold text-lg dark:text-white">Shea Ghana</span>
           </div>
-          <button onClick={onClose} className="text-neutral-500">
+          <button onClick={onClose} className="text-neutral-500 dark:text-neutral-300">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
             </svg>

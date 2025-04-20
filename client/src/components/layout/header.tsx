@@ -38,7 +38,7 @@ const Header: React.FC<HeaderProps> = ({ toggleMobileMenu }) => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-md">
+    <header className="sticky top-0 z-50 bg-white shadow-md dark:bg-slate-900 dark:shadow-slate-800">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-3">
           {/* Logo */}
@@ -47,7 +47,7 @@ const Header: React.FC<HeaderProps> = ({ toggleMobileMenu }) => {
               <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center mr-2">
                 <span className="text-white font-bold text-lg">SG</span>
               </div>
-              <span className="font-montserrat font-bold text-xl hidden sm:block">Shea Ghana</span>
+              <span className="font-montserrat font-bold text-xl hidden sm:block dark:text-white">Shea Ghana</span>
             </Link>
           </div>
           
@@ -80,7 +80,8 @@ const Header: React.FC<HeaderProps> = ({ toggleMobileMenu }) => {
           
           {/* Navigation Icons */}
           <div className="flex items-center space-x-4">
-            <Link href="/wishlist" className="text-neutral-700 hover:text-primary transition-colors duration-200">
+            <ThemeToggle />
+            <Link href="/wishlist" className="text-neutral-700 hover:text-primary transition-colors duration-200 dark:text-neutral-200">
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 className="h-6 w-6" 
@@ -96,7 +97,7 @@ const Header: React.FC<HeaderProps> = ({ toggleMobileMenu }) => {
                 />
               </svg>
             </Link>
-            <Link href="/cart" className="text-neutral-700 hover:text-primary transition-colors duration-200 relative">
+            <Link href="/cart" className="text-neutral-700 hover:text-primary transition-colors duration-200 relative dark:text-neutral-200">
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 className="h-6 w-6" 
@@ -183,7 +184,7 @@ const Header: React.FC<HeaderProps> = ({ toggleMobileMenu }) => {
       </div>
       
       {/* Category Navigation */}
-      <nav className="border-t border-neutral-300 bg-white overflow-x-auto custom-scroll">
+      <nav className="border-t border-neutral-300 dark:border-slate-700 bg-white dark:bg-slate-900 overflow-x-auto custom-scroll">
         <div className="container mx-auto px-4">
           <ul className="flex space-x-6 py-3 whitespace-nowrap">
             {categories.map((category) => (
@@ -193,7 +194,7 @@ const Header: React.FC<HeaderProps> = ({ toggleMobileMenu }) => {
                   className={`${
                     isActiveCategory(category.path) 
                       ? "text-primary font-medium" 
-                      : "text-neutral-600 hover:text-primary transition-colors duration-200"
+                      : "text-neutral-600 dark:text-neutral-300 hover:text-primary dark:hover:text-primary transition-colors duration-200"
                   }`}
                 >
                   {category.name}

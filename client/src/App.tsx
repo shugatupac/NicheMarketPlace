@@ -24,7 +24,7 @@ function App() {
 
   return (
     <TooltipProvider>
-      <div className="flex flex-col min-h-screen bg-neutral-200">
+      <div className="flex flex-col min-h-screen bg-neutral-100 dark:bg-slate-950">
         <Header toggleMobileMenu={toggleMobileMenu} />
         <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
         
