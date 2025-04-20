@@ -8,9 +8,53 @@ interface AuctionCardProps {
 }
 
 const AuctionCard = ({ auction }: AuctionCardProps) => {
-  if (!auction || !auction.product) {
+  if (!auction?.product) {
     return null;
   }
+
+  const { id, product, currentPrice, endTime, bidCount } = auction;
+  const { name, images } = product;
+
+  return (
+    <Link to={`/live-market/${id}`} className="group">
+      <div className="bg-white rounded-lg overflow-hidden shadow-lg border border-neutral-300 transition-transform duration-300 group-hover:-translate-y-1">
+        <div className="relative">
+          <img 
+            src={images[0]} 
+            alt={name} 
+            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" 
+          />
+          <div className="auction-timer absolute bottom-0 left-0 right-0 text-white py-2 px-4 flex justify-between items-center bg-gradient-to-r from-accent to-accent-dark">
+            <div className="text-sm">Current Bid:</div>
+            <div className="font-poppins font-semibold">GH₵ {currentPrice.toFixed(2)}</div>
+          </div>
+        </div>
+        <div className="p-4">
+          <h3 className="font-montserrat font-semibold text-lg mb-2 line-clamp-2">{name}</h3>
+          <div className="flex justify-between items-center">
+            <div>
+              <div className="text-sm text-neutral-600">Time Left:</div>
+              <div className="font-medium">
+                {new Date(endTime) > new Date() ? 'Active' : 'Ended'}
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-sm text-neutral-600">Bids:</div>
+              <div className="font-medium">{bidCount}</div>
+            </div>
+          </div>
+          <Button 
+            className="w-full mt-4 bg-accent hover:bg-accent-dark text-white"
+          >
+            View Auction
+          </Button>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+export { AuctionCard };
 
   const { id, product, currentPrice, endTime, bidCount, supplier } = auction;
   const productImage = product.images?.[0] ?? '/placeholder-image.jpg';
