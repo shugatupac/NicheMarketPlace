@@ -1,6 +1,7 @@
 import { Switch, Route } from "wouter";
-import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/toaster";
+import { LoginModal } from "@/components/ui/login-modal";
 import NotFound from "@/pages/not-found";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
@@ -17,7 +18,8 @@ import { useState } from "react";
 
 function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -27,7 +29,7 @@ function App() {
       <div className="flex flex-col min-h-screen bg-neutral-100 dark:bg-slate-950">
         <Header toggleMobileMenu={toggleMobileMenu} />
         <MobileMenu isOpen={isMobileMenuOpen} onClose={() => setIsMobileMenuOpen(false)} />
-        
+
         <main className="flex-grow">
           <Switch>
             <Route path="/" component={HomePage} />
@@ -42,21 +44,22 @@ function App() {
             <Route component={NotFound} />
           </Switch>
         </main>
-        
+
         <Footer />
-        
+
         {/* Supplier Dashboard Portal Button */}
         <div className="fixed right-5 bottom-5 z-30">
-          <a 
-            href="/supplier-dashboard" 
+          <button 
+            onClick={() => setLoginModalOpen(true)}
             className="bg-secondary hover:bg-secondary-dark text-white rounded-full p-3 shadow-lg flex items-center justify-center transition-colors duration-200"
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <span className="ml-2 font-medium hidden md:inline">Supplier Portal</span>
-          </a>
+          </button>
         </div>
+        <LoginModal isOpen={loginModalOpen} onClose={() => setLoginModalOpen(false)} />
       </div>
       <Toaster />
     </TooltipProvider>
