@@ -55,7 +55,7 @@ const ProductsPage = () => {
           price: 25.99,
           stock: 50,
           category: "Raw Materials",
-          imageUrl: "/images/products/shea-butter.jpg",
+          imageUrl: "https://images.unsplash.com/photo-1611080541599-8c6dbde6ed28?q=80&w=200&auto=format&fit=crop",
           createdAt: "2023-05-10T08:30:00Z"
         },
         {
@@ -65,7 +65,7 @@ const ProductsPage = () => {
           price: 15.50,
           stock: 35,
           category: "Cosmetics",
-          imageUrl: "/images/products/body-cream.jpg",
+          imageUrl: "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?q=80&w=200&auto=format&fit=crop",
           createdAt: "2023-05-15T10:45:00Z"
         }
       ];

@@ -43,7 +43,7 @@ const CategoriesPage = () => {
           name: "Raw Materials",
           description: "Unprocessed shea products",
           productCount: 12,
-          imageUrl: "/images/categories/raw-materials.jpg",
+          imageUrl: "https://images.unsplash.com/photo-1611080541599-8c6dbde6ed28?q=80&w=200&auto=format&fit=crop",
           createdAt: "2023-03-10T08:30:00Z"
         },
         {
@@ -51,7 +51,7 @@ const CategoriesPage = () => {
           name: "Cosmetics",
           description: "Beauty and skincare products",
           productCount: 24,
-          imageUrl: "/images/categories/cosmetics.jpg",
+          imageUrl: "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?q=80&w=200&auto=format&fit=crop",
           createdAt: "2023-03-15T10:45:00Z"
         },
         {
@@ -59,7 +59,7 @@ const CategoriesPage = () => {
           name: "Food",
           description: "Edible shea products",
           productCount: 8,
-          imageUrl: "/images/categories/food.jpg",
+          imageUrl: "https://images.unsplash.com/photo-1576866209830-589e1bfbaa4d?q=80&w=200&auto=format&fit=crop",
           createdAt: "2023-04-05T09:15:00Z"
         }
       ];

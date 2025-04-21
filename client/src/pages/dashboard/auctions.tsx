@@ -44,46 +44,49 @@ const AuctionsPage = () => {
       return [
         {
           id: "1",
-          title: "Premium Shea Butter Auction",
-          productName: "Premium Raw Shea Butter (5kg)",
-          startingPrice: 100.00,
-          currentBid: 150.00,
-          bidCount: 8,
-          startDate: "2023-06-10T08:00:00Z",
-          endDate: "2023-06-17T20:00:00Z",
+          title: "Premium Shea Butter Lot",
+          description: "10kg of premium unrefined shea butter from Northern Ghana",
+          startingPrice: 150.00,
+          currentBid: 175.50,
+          bidCount: 3,
+          startDate: "2023-06-01T10:00:00Z",
+          endDate: "2023-06-08T10:00:00Z",
           status: "active",
-          imageUrl: "/images/auctions/shea-butter-auction.jpg"
+          imageUrl: "https://images.unsplash.com/photo-1611080541599-8c6dbde6ed28?q=80&w=200&auto=format&fit=crop",
+          createdAt: "2023-05-25T08:30:00Z"
         },
         {
           id: "2",
           title: "Organic Shea Oil Collection",
-          productName: "Organic Shea Oil Set (3 bottles)",
-          startingPrice: 75.00,
-          currentBid: 75.00,
-          bidCount: 0,
-          startDate: "2023-06-20T10:00:00Z",
-          endDate: "2023-06-27T22:00:00Z",
-          status: "upcoming",
-          imageUrl: "/images/auctions/shea-oil-auction.jpg"
+          description: "Collection of 5 different organic shea oils, cold-pressed",
+          startingPrice: 85.00,
+          currentBid: 95.00,
+          bidCount: 2,
+          startDate: "2023-06-03T09:00:00Z",
+          endDate: "2023-06-10T09:00:00Z",
+          status: "active",
+          imageUrl: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?q=80&w=200&auto=format&fit=crop",
+          createdAt: "2023-05-28T14:15:00Z"
         },
         {
           id: "3",
-          title: "Handcrafted Shea Soap Bundle",
-          productName: "Artisanal Shea Soap Collection",
-          startingPrice: 50.00,
-          currentBid: 85.50,
-          bidCount: 12,
-          startDate: "2023-05-25T09:00:00Z",
-          endDate: "2023-06-01T21:00:00Z",
+          title: "Vintage Shea Processing Tools",
+          description: "Traditional tools used for shea butter processing",
+          startingPrice: 120.00,
+          currentBid: 120.00,
+          bidCount: 0,
+          startDate: "2023-05-20T11:00:00Z",
+          endDate: "2023-05-27T11:00:00Z",
           status: "ended",
-          imageUrl: "/images/auctions/shea-soap-auction.jpg"
+          imageUrl: "https://images.unsplash.com/photo-1516962080544-eac695c93791?q=80&w=200&auto=format&fit=crop",
+          createdAt: "2023-05-15T16:45:00Z"
         }
       ];
     }
   });
 
   // Filter auctions based on search and status
-  const filteredAuctions = auctions?.filter(auction => {
+  const filteredAuctions = (auctions as Auction[] || []).filter((auction: Auction) => {
     const matchesSearch = searchQuery === "" || 
       auction.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       auction.productName.toLowerCase().includes(searchQuery.toLowerCase());
@@ -159,7 +162,7 @@ const AuctionsPage = () => {
                   </TableCell>
                 </TableRow>
               ) : (
-                filteredAuctions?.map((auction) => (
+                filteredAuctions?.map((auction: Auction) => (
                   <TableRow key={auction.id}>
                     <TableCell>
                       <div className="flex items-center gap-3">
