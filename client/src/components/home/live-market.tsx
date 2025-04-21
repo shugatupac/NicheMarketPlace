@@ -2,7 +2,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "wouter";
 import { Auction } from "@/lib/types";
-import AuctionCard from "../product/auction-card";
+import { AuctionCard } from "../product/auction-card";
 import { Skeleton } from "../ui/skeleton";
 
 const LiveMarket = () => {

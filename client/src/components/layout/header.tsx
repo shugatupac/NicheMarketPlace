@@ -145,11 +145,8 @@ const Header: React.FC<HeaderProps> = ({ toggleMobileMenu }) => {
                 {user?.name.split(' ')[0]}
               </Link>
             ) : (
-              <Link 
-                href="/login" 
-                className="hidden md:block bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-full font-montserrat font-medium transition-colors duration-200"
-              >
-                Sign In
+              <Link href="/sign-in">
+                <Button variant="default" className="bg-amber-600 hover:bg-amber-700 text-white dark:bg-amber-500 dark:hover:bg-amber-600">Sign In</Button>
               </Link>
             )}
           </div>

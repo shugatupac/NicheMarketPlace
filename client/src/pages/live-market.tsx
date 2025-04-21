@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "wouter";
 import { useState } from "react";
 import { Auction } from "@/lib/types";
-import AuctionCard from "@/components/product/auction-card";
+import { AuctionCard } from "@/components/product/auction-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

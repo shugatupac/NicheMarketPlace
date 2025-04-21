@@ -147,8 +147,8 @@ const ProductListPage = () => {
       <div className="flex flex-col md:flex-row gap-8">
         {/* Filters - Desktop */}
         <div className={`md:w-1/4 lg:w-1/5 ${filterVisible ? 'block' : 'hidden md:block'}`}>
-          <div className="bg-white p-4 rounded-lg shadow mb-4">
-            <h3 className="font-montserrat font-semibold text-lg mb-4">Search</h3>
+          <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow mb-4">
+            <h3 className="font-montserrat font-semibold text-lg mb-4 dark:text-white">Search</h3>
             <form onSubmit={handleSearch} className="mb-4">
               <div className="flex gap-2">
                 <Input
@@ -178,9 +178,9 @@ const ProductListPage = () => {
             </form>
           </div>
           
-          <div className="bg-white p-4 rounded-lg shadow mb-4">
-            <h3 className="font-montserrat font-semibold text-lg mb-4">Categories</h3>
-            <div className="space-y-2">
+          <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow mb-4">
+            <h3 className="font-montserrat font-semibold text-lg mb-4 dark:text-white">Categories</h3>
+            <div className="space-y-2 dark:text-gray-200">
               <div 
                 className={`cursor-pointer py-1 ${!selectedCategory ? 'text-primary font-medium' : 'hover:text-primary'}`}
                 onClick={() => setSelectedCategory(undefined)}
@@ -210,10 +210,10 @@ const ProductListPage = () => {
             </div>
           </div>
           
-          <div className="bg-white p-4 rounded-lg shadow">
-            <h3 className="font-montserrat font-semibold text-lg mb-4">Price Range</h3>
+          <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow">
+            <h3 className="font-montserrat font-semibold text-lg mb-4 dark:text-white">Price Range</h3>
             <div className="space-y-4">
-              <div className="flex justify-between">
+              <div className="flex justify-between dark:text-gray-200">
                 <div className="font-medium">GH₵ {priceRange[0]}</div>
                 <div className="font-medium">GH₵ {priceRange[1]}</div>
               </div>
